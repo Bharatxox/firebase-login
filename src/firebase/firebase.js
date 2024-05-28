@@ -7,7 +7,7 @@ import { getAuth } from "firebase/auth";
 // Your web app's Firebase configuration
 
 const firebaseConfig = {
-  apiKey: "AIzaSyAB358vTkjzuwxx6Tjay_nPhPTC8SLiZDA",
+  apiKey: import.meta.env.VITE_FIREBASE_API_KEY,
   authDomain: "fir-auth-5c543.firebaseapp.com",
   projectId: "fir-auth-5c543",
   storageBucket: "fir-auth-5c543.appspot.com",
@@ -15,6 +15,7 @@ const firebaseConfig = {
   appId: "1:1048673846504:web:024299bd86ee40622e355d",
   measurementId: "G-JDTHX7VKG0",
 };
+console.log(import.meta.env.REACT_APP_API);
 
 // Initialize Firebase
 const app = initializeApp(firebaseConfig);
