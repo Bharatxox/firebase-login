@@ -1,6 +1,6 @@
 // src/components/LoginPage.js
 import React, { useState, useContext } from "react";
-import { Navigate, Link } from "react-router-dom";
+import { Navigate, Link, useNavigate } from "react-router-dom";
 import { FaGoogle } from "react-icons/fa";
 import {
   doSignInwiwthEmailAndPassword,
@@ -9,6 +9,7 @@ import {
 import { MyContext } from "../context/authContext/myContext";
 
 const LoginPage = () => {
+  const navigate = useNavigate();
   const { userLogin } = useContext(MyContext);
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
@@ -21,6 +22,7 @@ const LoginPage = () => {
       setSignIn(true);
       try {
         await doSignInwiwthEmailAndPassword(email, password);
+        navigate("/home");
       } catch (error) {
         setErrorMessage(error.message);
         setSignIn(false);
@@ -34,6 +36,7 @@ const LoginPage = () => {
       setSignIn(true);
       try {
         await doSignWithGoogle();
+        navigate("/home");
       } catch (error) {
         setErrorMessage(error.message);
         setSignIn(false);
@@ -43,7 +46,7 @@ const LoginPage = () => {
 
   return (
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
-      {userLogin && <Navigate to="/home" replace />}
+      {/* {userLogin && <Navigate to="/" />} */}
       <div className="w-full max-w-md p-8 space-y-8 bg-white shadow-lg rounded-lg">
         <h2 className="text-2xl font-bold text-center text-gray-700">Login</h2>
         {errorMessage && (

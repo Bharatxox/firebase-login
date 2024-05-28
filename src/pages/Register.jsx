@@ -1,11 +1,14 @@
 // src/components/RegisterPage.js
-import React, { useState, useContext } from "react";
+import { useState, useContext } from "react";
 import { useNavigate, Navigate, Link } from "react-router-dom";
 import { doCreateUserWithEmailAndPassword } from "../firebase/auth";
 import { MyContext } from "../context/authContext/myContext";
 
 const RegisterPage = () => {
   const { userLogin } = useContext(MyContext);
+  const [firstName, setFirstName] = useState("");
+  const [lastName, setLastName] = useState("");
+  const [phone, setPhone] = useState("");
   const [email, setEmail] = useState("");
   const [password, setPassword] = useState("");
   const [errorMessage, setErrorMessage] = useState("");
@@ -14,8 +17,18 @@ const RegisterPage = () => {
   const handleSignUp = async (e) => {
     e.preventDefault();
     try {
-      await doCreateUserWithEmailAndPassword(email, password);
+      const user = await doCreateUserWithEmailAndPassword(
+        email,
+        password
+        // firstName,
+        // lastName,
+        // phone
+      );
       navigate("/");
+      // if (user.user.accessToken != "") {
+      //   navigate("/");
+      // }
+      console.log(user);
     } catch (error) {
       setErrorMessage(error.message);
     }
@@ -33,6 +46,51 @@ const RegisterPage = () => {
         )}
         <form className="mt-8 space-y-6" onSubmit={handleSignUp}>
           <div className="rounded-md shadow-sm -space-y-px">
+            {/* <div>
+              <label htmlFor="first-name" className="sr-only">
+                First Name
+              </label>
+              <input
+                id="first-name"
+                name="firstName"
+                type="text"
+                required
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="First Name"
+                value={firstName}
+                onChange={(e) => setFirstName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="last-name" className="sr-only">
+                Last Name
+              </label>
+              <input
+                id="last-name"
+                name="lastName"
+                type="text"
+                required
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Last Name"
+                value={lastName}
+                onChange={(e) => setLastName(e.target.value)}
+              />
+            </div>
+            <div>
+              <label htmlFor="phone" className="sr-only">
+                Phone
+              </label>
+              <input
+                id="phone"
+                name="phone"
+                type="text"
+                required
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                placeholder="Phone"
+                value={phone}
+                onChange={(e) => setPhone(e.target.value)}
+              />
+            </div> */}
             <div>
               <label htmlFor="email-address" className="sr-only">
                 Email address
@@ -43,7 +101,7 @@ const RegisterPage = () => {
                 type="email"
                 autoComplete="email"
                 required
-                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
+                className="relative block w-full px-3 py-2 border border-gray-300 placeholder-gray-500 text-gray-900 rounded-t-md  focus:outline-none focus:ring-indigo-500 focus:border-indigo-500 focus:z-10 sm:text-sm"
                 placeholder="Email address"
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}

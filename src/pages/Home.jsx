@@ -1,4 +1,4 @@
-import { useContext } from "react";
+import { useContext, useEffect } from "react";
 import { useNavigate } from "react-router-dom";
 import { doSignOut } from "../firebase/auth";
 import { MyContext } from "../context/authContext/myContext";
@@ -6,6 +6,10 @@ import { MyContext } from "../context/authContext/myContext";
 const HomePage = () => {
   const { currentUser } = useContext(MyContext);
   const navigate = useNavigate();
+
+  useEffect(() => {
+    console.log(currentUser);
+  }, []);
 
   const handleLogout = async () => {
     await doSignOut();
@@ -16,7 +20,7 @@ const HomePage = () => {
     <div className="flex items-center justify-center min-h-screen bg-gray-100">
       <div className="w-full max-w-md p-8 space-y-8 bg-white shadow-lg rounded-lg text-center">
         <h2 className="text-2xl font-bold text-gray-700">
-          Welcome {currentUser.email}!
+          Welcome {currentUser?.email}!
         </h2>
         <button
           onClick={handleLogout}
